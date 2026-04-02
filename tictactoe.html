@@ -20,6 +20,12 @@
       align-items: center;
       justify-content: center;
       min-height: 100vh;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    body.light {
+      background: #f0f4f8;
+      color: #1a1a2e;
     }
 
     h1 {
@@ -34,6 +40,10 @@
       margin-bottom: 1.5rem;
       min-height: 1.8rem;
       color: #a8dadc;
+    }
+
+    body.light #status {
+      color: #0f3460;
     }
 
     #board {
@@ -56,17 +66,31 @@
       user-select: none;
     }
 
+    body.light .cell {
+      background: #dce8f5;
+    }
+
     .cell:hover:not(.taken) {
       background: #0f3460;
       transform: scale(1.05);
     }
 
+    body.light .cell:hover:not(.taken) {
+      background: #a8c8ea;
+    }
+
     .cell.x { color: #e94560; }
     .cell.o { color: #a8dadc; }
+
+    body.light .cell.o { color: #0f3460; }
 
     .cell.win {
       background: #0f3460;
       animation: pulse 0.5s ease;
+    }
+
+    body.light .cell.win {
+      background: #a8c8ea;
     }
 
     @keyframes pulse {
@@ -102,6 +126,11 @@
       background: #16213e;
       padding: 0.5rem 1.2rem;
       border-radius: 8px;
+      transition: background 0.3s;
+    }
+
+    body.light .score-box {
+      background: #dce8f5;
     }
 
     .score-box span {
@@ -113,9 +142,37 @@
     .score-box.x-score span { color: #e94560; }
     .score-box.draw-score span { color: #aaa; }
     .score-box.o-score span { color: #a8dadc; }
+
+    body.light .score-box.o-score span { color: #0f3460; }
+    body.light .score-box.draw-score span { color: #666; }
+
+    #theme-toggle {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      background: #16213e;
+      color: #eee;
+      border: none;
+      border-radius: 20px;
+      padding: 0.4rem 1rem;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    body.light #theme-toggle {
+      background: #dce8f5;
+      color: #1a1a2e;
+    }
+
+    #theme-toggle:hover {
+      opacity: 0.85;
+    }
   </style>
 </head>
 <body>
+
+  <button id="theme-toggle">☀️ Light Mode</button>
 
   <h1>Tic Tac Toe</h1>
 
@@ -204,6 +261,13 @@
     });
 
     document.getElementById('restart').addEventListener('click', init);
+
+    const themeToggle = document.getElementById('theme-toggle');
+    themeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('light');
+      const isLight = document.body.classList.contains('light');
+      themeToggle.textContent = isLight ? '🌙 Dark Mode' : '☀️ Light Mode';
+    });
 
     init();
   </script>
